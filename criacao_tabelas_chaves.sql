@@ -37,7 +37,7 @@ CREATE TABLE ESPECIALIDADE (
 
 CREATE TABLE AGENDA (
     IdAgenda INT,
-    DiaSemana DATE,
+    DiaSemana INT,
     HoraInicio TIME,
     HoraFim TIME,
     Crm VARCHAR(15),
@@ -101,7 +101,29 @@ CREATE TABLE DIAGNOSTICA (
         ON DELETE CASCADE,
     CONSTRAINT FK_DIAGNOSTICA_DOENCA FOREIGN KEY(IdDoenca) REFERENCES DOENCA(IdDoenca)
         ON DELETE CASCADE
-)
+);
+
+CREATE OR REPLACE FUNCTION CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL() RETURNS TRIGGER AS $$
+BEGIN
+    -- If there is no corresponding entry in AGENDA, or there is already a duplicate entry in CONSULTA, rollback the insert
+    IF (SELECT COUNT(*)
+        FROM AGENDA 
+        WHERE DiaSemana = EXTRACT(DOW FROM NEW.Dia) AND Crm = NEW.Crm) = 0
+    OR (SELECT COUNT(*) 
+        FROM CONSULTA 
+        WHERE Dia = NEW.Dia AND Crm = NEW.Crm) > 0 
+        THEN
+        RAISE EXCEPTION 'Operação Inválida: horário indisponível ou já ocupado';
+    END IF;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL
+BEFORE INSERT ON CONSULTA
+FOR EACH ROW
+EXECUTE FUNCTION CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL();
 
 
 
