@@ -106,14 +106,17 @@ CREATE TABLE DIAGNOSTICA (
 CREATE OR REPLACE FUNCTION CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL() RETURNS TRIGGER AS $$
 BEGIN
     -- If there is no corresponding entry in AGENDA, or there is already a duplicate entry in CONSULTA, rollback the insert
-    IF (SELECT COUNT(*)
-        FROM AGENDA 
-        WHERE DiaSemana = EXTRACT(DOW FROM NEW.Dia) AND Crm = NEW.Crm) = 0
-    OR (SELECT COUNT(*) 
+	IF (SELECT COUNT(*)
+		FROM AGENDA 
+		WHERE DiaSemana = EXTRACT(Dow FROM NEW.Dia) AND Crm = NEW.Crm) = 0
+		THEN
+		RAISE EXCEPTION 'Operação Inválida: horário indisponível para o dia da semana %', extract(dow from NEW.Dia);
+	END IF;
+    IF (SELECT COUNT(*) 
         FROM CONSULTA 
         WHERE Dia = NEW.Dia AND Crm = NEW.Crm) > 0 
         THEN
-        RAISE EXCEPTION 'Operação Inválida: horário indisponível ou já ocupado';
+        RAISE EXCEPTION 'Operação Inválida: horário já ocupado';
     END IF;
     
     RETURN NEW;
