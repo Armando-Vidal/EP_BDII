@@ -178,6 +178,6 @@ WHERE IdCon IN (
     WHERE p.NomeP = 'Diego Pituca'
       AND c.Dia = '2024-05-10'
       AND c.HoraInicCon = '10:00:00'
-      AND e.NomeE = 'dermatologia'
+      AND e.NomeE = 'Dermatologia'
       AND m.NomeM = 'Dr. House'
 );
