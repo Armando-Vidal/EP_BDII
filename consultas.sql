@@ -166,29 +166,18 @@ WHERE
 
 
 
---- cara não  tenho ideia de como fazer isso
-
-UPDATE
-    CONSULTA
-SET
-    Crm = (SELECT Crm FROM MEDICO WHERE NomeM = 'Dr. Kildare'),
+UPDATE CONSULTA
+SET Crm = (SELECT Crm FROM MEDICO WHERE NomeM = 'Dr. Kildare'),
     Dia = '2024-05-24'
-WHERE
-	IdCon = (SELECT
-		IdCon
-		FROM
-		CONSULTA C
-		JOIN
-		PACIENTE P ON C.IdPac = P.IdPac
-		JOIN
-		MEDICO M ON C.Crm = M.Crm
-		JOIN
-		ESPECIALIDADE E ON C.IdEsp = E.IdEsp
-		WHERE
-		P.NomeP = 'Diego Pituca'
-		AND C.Dia = '2024-05-10'
-		AND C.HoraInicCon = '10:00:00'
-		AND M.NomeM = 'Dr. House'
-		AND E.NomeE = 'dermatologia'
-	);
-
+WHERE IdCon IN (
+    SELECT c.IdCon
+    FROM CONSULTA c
+    INNER JOIN PACIENTE p ON c.IdPac = p.IdPac
+    INNER JOIN MEDICO m ON c.Crm = m.Crm
+    INNER JOIN ESPECIALIDADE e ON c.IdEsp = e.IdEsp
+    WHERE p.NomeP = 'Diego Pituca'
+      AND c.Dia = '2024-05-10'
+      AND c.HoraInicCon = '10:00:00'
+      AND e.NomeE = 'dermatologia'
+      AND m.NomeM = 'Dr. House'
+);
