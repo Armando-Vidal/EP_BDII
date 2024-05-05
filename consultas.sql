@@ -87,7 +87,7 @@ WHERE
 
 
 
---Nada
+--dia da semana antigo
 SELECT
     M.NomeM
 FROM
@@ -98,6 +98,21 @@ GROUP BY
     M.Crm
 HAVING
     COUNT(DISTINCT A.DiaSemana) = 7;
+
+
+
+--dia da semana novo
+SELECT M.NomeM
+FROM MEDICO M
+WHERE NOT EXISTS (
+    SELECT DISTINCT DiaSemana
+    FROM AGENDA A
+    WHERE A.Crm = M.Crm
+    EXCEPT
+    SELECT DISTINCT EXTRACT(DOW FROM C.Dia)
+    FROM CONSULTA C
+    WHERE C.Crm = M.Crm
+)
 
 
 
