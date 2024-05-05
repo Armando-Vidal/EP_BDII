@@ -107,10 +107,10 @@ CREATE OR REPLACE FUNCTION CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL() RETURNS 
 BEGIN
     IF (SELECT COUNT(*)
         FROM AGENDA 
-        WHERE DiaSemana = EXTRACT(DOW FROM NEW.Dia) AND Crm = NEW.Crm) = 0
+        WHERE DiaSemana = EXTRACT(DOW FROM NEW.Dia) AND Crm = NEW.Crm AND NEW.HoraInicCon = HoraInicio) = 0
     OR (SELECT COUNT(*) 
         FROM CONSULTA 
-        WHERE Dia = NEW.Dia AND Crm = NEW.Crm) > 0 
+        WHERE Dia = NEW.Dia AND Crm = NEW.Crm AND NEW.HoraInicCon = HoraInicCon) > 0 
         THEN
         RAISE EXCEPTION 'Operação Inválida: horário já ocupado';
     END IF;
