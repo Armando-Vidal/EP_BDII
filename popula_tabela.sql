@@ -28,7 +28,7 @@ INSERT INTO ESPECIALIDADE (IdEsp, NomeE, Indice) VALUES
 (2, 'Endocrinologia', 85),
 (3, 'Pneumologia', 80),
 (4, 'Oftamologia', 90),
-(5, 'Deramatologia', 95);
+(5, 'Dermatologia', 95);
 
 -- Populando tabela AGENDA
 INSERT INTO AGENDA (IdAgenda, DiaSemana, HoraInicio, HoraFim, Crm) VALUES 
@@ -74,7 +74,7 @@ INSERT INTO CONSULTA (IdCon, Crm, IdEsp, IdPac, Dia, HoraInicCon, HoraFimCon, Pa
 (3, 'CRM98765', 3, 3, '2024-05-04', '09:00:00', '09:30:00', TRUE, 150, 'Transferência'),
 (4, 'CRM11111', 4, 4, '2024-01-04', '11:00:00', '12:00:00', TRUE, 200, 'Dinheiro'),
 (5, 'CRM11111', 1, 3, '2024-01-10', '15:00:00', '16:00:00', TRUE, 100, 'Cartão'),
-(6, 'CRM11111', 5, 4, '2024-05-10', '10:00:00', '11:00:00', FALSE, 200, 'Trasnferência');
+(6, 'CRM11111', 5, 4, '2024-05-10', '10:00:00', '11:00:00', FALSE, 200, 'Transferência');
 
 -- Populando tabela DIAGNOSTICO
 INSERT INTO DIAGNOSTICO (IdDiagnostico, TratamentoRecomendado, RemediosReceitados, Observacoes, IdCon) VALUES 

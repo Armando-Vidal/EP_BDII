@@ -105,7 +105,6 @@ CREATE TABLE DIAGNOSTICA (
 
 CREATE OR REPLACE FUNCTION CONSULTA_DUPLICADA_OU_HORARIO_INDISPONIVEL() RETURNS TRIGGER AS $$
 BEGIN
-    -- If there is no corresponding entry in AGENDA, or there is already a duplicate entry in CONSULTA, rollback the insert
     IF (SELECT COUNT(*)
         FROM AGENDA 
         WHERE DiaSemana = EXTRACT(DOW FROM NEW.Dia) AND Crm = NEW.Crm) = 0

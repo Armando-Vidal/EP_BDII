@@ -16,7 +16,7 @@ WHERE
 
 
 
---Nada
+
 SELECT 
     M.Crm AS CRM,
     M.NomeM AS NomeM
