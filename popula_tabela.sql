@@ -1,3 +1,7 @@
+-- Armando Augusto Marchini Vidal - 13673072
+-- Luan Pereira Pinheiro - 13672471
+-- Marcos Vilela Rezende Júnior - 13729806
+
 -- Populando tabela MEDICO
 INSERT INTO MEDICO (Crm, NomeM, TelefoneM, Percentual) VALUES 
 ('CRM12345', 'Dr. João Silva', '123456789', 70),
